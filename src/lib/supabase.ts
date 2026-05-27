@@ -1,8 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 
-// DEBUG TEMPORAL — eliminar antes de hacer deploy
-console.log('[supabase debug] URL:', process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 20))
-console.log('[supabase debug] SERVICE_ROLE_KEY:', process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 20))
 
 export interface ClientConfig {
   id: string
