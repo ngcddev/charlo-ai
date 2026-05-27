@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+import { signInAfterOnboarding } from '@/lib/auth'
 
 // ── Types ─────────────────────────────────────────────────
 interface FAQ { question: string; answer: string }
@@ -19,6 +21,9 @@ interface FormData {
   tone: string
   welcomeMessage: string
   faqs: FAQ[]
+  // Step 5 — account credentials
+  email: string
+  password: string
 }
 
 type ScalarField = keyof Omit<FormData, 'faqs'>
@@ -49,13 +54,17 @@ const TONES = [
   { value: 'formal',       label: 'Formal' },
 ]
 
-const STEP_LABELS = ['Negocio', 'Contacto', 'Bot', 'Confirmar']
+const STEP_LABELS = ['Negocio', 'Contacto', 'Bot', 'Confirmar', 'Cuenta']
 
 const INITIAL: FormData = {
   businessName: '', sector: '', city: '', whatsappNumber: '', description: '',
   schedule: '', address: '', website: '', contactEmail: '',
   botName: '', tone: 'warm', welcomeMessage: '', faqs: [],
+  email: '', password: '',
 }
+
+// Total number of steps (0-indexed, so last step = TOTAL_STEPS - 1)
+const TOTAL_STEPS = STEP_LABELS.length // 5
 
 // ── Shared field wrapper ──────────────────────────────────
 function OBField({
@@ -129,7 +138,7 @@ function Step1({ data, errors, set }: StepProps) {
   return (
     <div className="ob-card">
       <div className="ob-card-head">
-        <span className="ob-step-tag">01 / 04</span>
+        <span className="ob-step-tag">01 / 05</span>
         <h1 className="ob-card-title">Tu negocio</h1>
         <p className="ob-card-sub">
           Cuéntanos quiénes son para que Charló los represente a la perfección.
@@ -209,7 +218,7 @@ function Step2({ data, errors, set }: StepProps) {
   return (
     <div className="ob-card">
       <div className="ob-card-head">
-        <span className="ob-step-tag">02 / 04</span>
+        <span className="ob-step-tag">02 / 05</span>
         <h1 className="ob-card-title">Horarios y contacto</h1>
         <p className="ob-card-sub">
           Charló usará esta información para responder preguntas de tus clientes.
@@ -275,7 +284,7 @@ function Step3({ data, errors, set, setFaq, addFaq, removeFaq }: Step3Props) {
   return (
     <div className="ob-card">
       <div className="ob-card-head">
-        <span className="ob-step-tag">03 / 04</span>
+        <span className="ob-step-tag">03 / 05</span>
         <h1 className="ob-card-title">Tu bot</h1>
         <p className="ob-card-sub">
           Dale personalidad. Charló hablará exactamente como tú.
@@ -394,10 +403,10 @@ function Step4({ data }: { data: FormData }) {
   return (
     <div className="ob-card">
       <div className="ob-card-head">
-        <span className="ob-step-tag">04 / 04</span>
-        <h1 className="ob-card-title">¡Todo listo!</h1>
+        <span className="ob-step-tag">04 / 05</span>
+        <h1 className="ob-card-title">¡Casi listo!</h1>
         <p className="ob-card-sub">
-          Revisa la configuración y activa tu bot. Puedes modificarla después.
+          Revisa la configuración. Puedes modificarla después desde el dashboard.
         </p>
       </div>
 
@@ -452,8 +461,90 @@ function Step4({ data }: { data: FormData }) {
   )
 }
 
+// ── STEP 5 — Crea tu cuenta ───────────────────────────────
+function Step5({ data, errors, set }: StepProps) {
+  const [showPass, setShowPass] = useState(false)
+
+  return (
+    <div className="ob-card">
+      <div className="ob-card-head">
+        <span className="ob-step-tag">05 / 05</span>
+        <h1 className="ob-card-title">Crea tu cuenta</h1>
+        <p className="ob-card-sub">
+          Accede al panel de control para ver estadísticas, ajustar tu bot y más.
+        </p>
+      </div>
+
+      <div className="ob-fields">
+        <OBField label="Correo electrónico" error={errors.email}>
+          <input
+            className={`ob-input${errors.email ? ' error' : ''}`}
+            type="email"
+            value={data.email}
+            onChange={(e) => set('email', e.target.value)}
+            placeholder="tu@empresa.com"
+            autoComplete="email"
+          />
+        </OBField>
+
+        <OBField
+          label="Contraseña"
+          error={errors.password}
+          hint="Mínimo 8 caracteres"
+        >
+          <div className="ob-pass-wrap">
+            <input
+              className={`ob-input ob-pass-input${errors.password ? ' error' : ''}`}
+              type={showPass ? 'text' : 'password'}
+              value={data.password}
+              onChange={(e) => set('password', e.target.value)}
+              placeholder="••••••••"
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              className="ob-pass-toggle"
+              onClick={() => setShowPass(v => !v)}
+              aria-label={showPass ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+            >
+              {showPass ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                  strokeLinecap="round" strokeLinejoin="round" width="16" height="16" aria-hidden="true">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                  <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                  strokeLinecap="round" strokeLinejoin="round" width="16" height="16" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </OBField>
+
+        <div className="ob-account-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" width="15" height="15" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <p>
+            Al crear la cuenta quedarás vinculado a tu bot y podrás acceder al
+            dashboard en cualquier momento desde{' '}
+            <a href="/login" className="ob-account-link">charlo.ai/login</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Success screen ────────────────────────────────────────
-function SuccessScreen({ data }: { data: FormData }) {
+function SuccessScreen({ botName, businessName }: { botName: string; businessName: string }) {
   return (
     <div className="ob-wrap">
       <div className="ob-success">
@@ -463,36 +554,13 @@ function SuccessScreen({ data }: { data: FormData }) {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h1 className="ob-success-title">¡{data.botName} está configurado!</h1>
+        <h1 className="ob-success-title">¡{botName} está configurado!</h1>
         <p className="ob-success-sub">
-          Tu bot para <strong>{data.businessName}</strong> fue creado exitosamente.
-          El próximo paso es conectar tu número de WhatsApp desde el dashboard.
+          Tu bot para <strong>{businessName}</strong> fue creado exitosamente.
+          Redirigiendo al panel de control…
         </p>
-        <div className="ob-success-next">
-          <div className="ob-next-step">
-            <span className="ob-next-num">01</span>
-            <div>
-              <strong>Conecta WhatsApp Business API</strong>
-              <p>Vincula tu número de WhatsApp en Meta for Developers.</p>
-            </div>
-          </div>
-          <div className="ob-next-step">
-            <span className="ob-next-num">02</span>
-            <div>
-              <strong>Prueba tu bot</strong>
-              <p>Escríbete desde otro número y verifica que Charló responde.</p>
-            </div>
-          </div>
-          <div className="ob-next-step">
-            <span className="ob-next-num">03</span>
-            <div>
-              <strong>¡Listo para atender clientes!</strong>
-              <p>Tu negocio ahora responde 24/7 de forma automática.</p>
-            </div>
-          </div>
-        </div>
-        <a href="/" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
-          Volver al inicio
+        <a href="/dashboard" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+          Ir al dashboard →
         </a>
       </div>
     </div>
@@ -501,6 +569,8 @@ function SuccessScreen({ data }: { data: FormData }) {
 
 // ── Main page ─────────────────────────────────────────────
 export default function OnboardingPage() {
+  const router = useRouter()
+
   const [step, setStep]           = useState(0)
   const [direction, setDirection] = useState<'forward' | 'back'>('forward')
   const [stepKey, setStepKey]     = useState(0)
@@ -551,6 +621,14 @@ export default function OnboardingPage() {
       if (!data.tone)                 e.tone          = 'Elige un tono'
       if (!data.welcomeMessage.trim()) e.welcomeMessage = 'Campo requerido'
     }
+    // Step 3 (summary) needs no client-side validation
+    if (s === 4) {
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!data.email.trim() || !emailRe.test(data.email))
+        e.email = 'Introduce un email válido'
+      if (!data.password || data.password.length < 8)
+        e.password = 'Mínimo 8 caracteres'
+    }
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -572,6 +650,7 @@ export default function OnboardingPage() {
   }
 
   const handleSubmit = async () => {
+    if (!validate(step)) return
     setSubmitting(true)
     setErrors({})
     try {
@@ -592,14 +671,31 @@ export default function OnboardingPage() {
           tone:           data.tone,
           welcomeMessage: data.welcomeMessage,
           faqs:           data.faqs.filter((f) => f.question.trim() && f.answer.trim()),
+          email:          data.email.trim().toLowerCase(),
+          password:       data.password,
         }),
       })
-      const result = await res.json() as { clientId?: string; error?: string }
+      const result = await res.json() as { clientId?: string; email?: string; error?: string }
       if (!res.ok) {
         setErrors({ form: result.error ?? 'Error al guardar la configuración' })
         return
       }
-      setDone(true)
+
+      // Account created — sign in and redirect to dashboard
+      const { error: signInError } = await signInAfterOnboarding(
+        result.email ?? data.email,
+        data.password
+      )
+
+      if (signInError) {
+        // Edge case: account created but auto-login failed.
+        // Show success screen with manual link to login.
+        setDone(true)
+        return
+      }
+
+      // Successful — go straight to the dashboard
+      router.replace('/dashboard')
     } catch {
       setErrors({ form: 'Error de red. Intenta de nuevo.' })
     } finally {
@@ -607,7 +703,9 @@ export default function OnboardingPage() {
     }
   }
 
-  if (done) return <SuccessScreen data={data} />
+  if (done) return <SuccessScreen botName={data.botName} businessName={data.businessName} />
+
+  const isLastStep = step === TOTAL_STEPS - 1
 
   return (
     <div className="ob-wrap">
@@ -635,6 +733,7 @@ export default function OnboardingPage() {
             />
           )}
           {step === 3 && <Step4 data={data} />}
+          {step === 4 && <Step5 data={data} errors={errors} set={set} />}
         </div>
 
         {/* Form-level error */}
@@ -654,7 +753,7 @@ export default function OnboardingPage() {
               ← Volver
             </button>
           )}
-          {step < 3 ? (
+          {!isLastStep ? (
             <button type="button" className="btn btn-primary" onClick={goNext}>
               Continuar →
             </button>
@@ -668,7 +767,7 @@ export default function OnboardingPage() {
               {submitting ? (
                 <>
                   <span className="ob-spinner" aria-hidden="true" />
-                  Activando…
+                  Creando cuenta…
                 </>
               ) : (
                 <>⚡ Activar mi bot</>

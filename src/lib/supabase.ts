@@ -20,11 +20,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-export async function getClientConfig(phoneNumber: string): Promise<ClientConfig | null> {
+export async function getClientConfig(phoneNumberId: string): Promise<ClientConfig | null> {
   const { data, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('phone_number', phoneNumber)
+    .eq('whatsapp_phone_number_id', phoneNumberId)
     .single()
 
   if (error) {

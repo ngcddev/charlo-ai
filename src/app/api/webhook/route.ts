@@ -80,12 +80,18 @@ export async function POST(request: NextRequest): Promise<Response> {
 
         const userPhone = msg.from
         const userText = msg.text.body
+        const phoneNumberId = value.metadata?.phone_number_id
+
+        if (!phoneNumberId) {
+          console.warn('Webhook message missing metadata.phone_number_id — skipping')
+          continue
+        }
 
         try {
-          const config = await getClientConfig(userPhone)
+          const config = await getClientConfig(phoneNumberId)
 
           if (!config) {
-            console.warn(`No client config found for phone: ${userPhone}`)
+            console.warn(`No client config found for phone_number_id: ${phoneNumberId}`)
             continue
           }
 

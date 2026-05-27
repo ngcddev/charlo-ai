@@ -17,6 +17,9 @@ interface OnboardingBody {
   tone: string
   welcomeMessage: string
   faqs: { question: string; answer: string }[]
+  // Auth credentials — used to create the Supabase Auth account
+  email: string
+  password: string
 }
 
 const REQUIRED: (keyof Omit<OnboardingBody, 'website' | 'faqs'>)[] = [
@@ -31,6 +34,8 @@ const REQUIRED: (keyof Omit<OnboardingBody, 'website' | 'faqs'>)[] = [
   'botName',
   'tone',
   'welcomeMessage',
+  'email',
+  'password',
 ]
 
 // ── POST /api/onboarding ──────────────────────────────────
@@ -54,6 +59,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
   }
 
+  // Basic password length check
+  if (body.password.length < 8) {
+    return NextResponse.json(
+      { error: 'La contraseña debe tener al menos 8 caracteres.' },
+      { status: 400 }
+    )
+  }
+
   // Build config
   const config: OnboardingConfig = {
     businessName:   body.businessName.trim(),
@@ -73,6 +86,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     ),
   }
 
+  const email = body.email.trim().toLowerCase()
+
   // Generate system prompt
   const systemPrompt = generateSystemPrompt(config)
 
@@ -82,7 +97,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 
-  const { data, error } = await supabase
+  // ── 1. Insert client record (without user_id yet) ───────
+  const { data: clientData, error: clientError } = await supabase
     .from('clients')
     .insert({
       phone_number:             config.whatsappNumber,
@@ -108,20 +124,61 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     .select('id')
     .single()
 
-  if (error) {
+  if (clientError) {
     // Duplicate phone_number
-    if (error.code === '23505') {
+    if (clientError.code === '23505') {
       return NextResponse.json(
         { error: 'Este número de WhatsApp ya está registrado.' },
         { status: 409 }
       )
     }
-    console.error('[onboarding] Supabase error:', error.message)
+    console.error('[onboarding] Supabase client error:', clientError.message)
     return NextResponse.json(
       { error: 'Error al guardar la configuración. Intenta de nuevo.' },
       { status: 500 }
     )
   }
 
-  return NextResponse.json({ clientId: data.id }, { status: 201 })
+  const clientId = clientData.id
+
+  // ── 2. Create Auth user ──────────────────────────────────
+  const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    email,
+    password: body.password,
+    email_confirm: true, // skip confirmation email — instant access
+  })
+
+  if (authError) {
+    // Rollback: delete the client we just inserted
+    await supabase.from('clients').delete().eq('id', clientId)
+
+    const msg = authError.message?.toLowerCase() ?? ''
+    if (msg.includes('already') || msg.includes('registered') || msg.includes('exists')) {
+      return NextResponse.json(
+        { error: 'Este correo ya tiene una cuenta. Inicia sesión en su lugar.' },
+        { status: 409 }
+      )
+    }
+    console.error('[onboarding] Supabase auth error:', authError.message)
+    return NextResponse.json(
+      { error: 'Error al crear la cuenta. Intenta de nuevo.' },
+      { status: 500 }
+    )
+  }
+
+  const userId = authData.user.id
+
+  // ── 3. Link user_id → client ─────────────────────────────
+  const { error: linkError } = await supabase
+    .from('clients')
+    .update({ user_id: userId })
+    .eq('id', clientId)
+
+  if (linkError) {
+    // Non-fatal: client exists and auth user exists — the user can still log in.
+    // Log the issue so it can be fixed manually if needed.
+    console.error('[onboarding] Failed to link user_id to client:', linkError.message)
+  }
+
+  return NextResponse.json({ clientId, email }, { status: 201 })
 }

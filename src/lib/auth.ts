@@ -22,3 +22,13 @@ export async function getSession() {
   const { data: { session } } = await supabase.auth.getSession()
   return session
 }
+
+/**
+ * Sign in immediately after onboarding account creation.
+ * The account was just created server-side so credentials are always fresh.
+ * Redirecting to /dashboard happens in the caller after this resolves.
+ */
+export async function signInAfterOnboarding(email: string, password: string) {
+  const supabase = createClient()
+  return supabase.auth.signInWithPassword({ email, password })
+}

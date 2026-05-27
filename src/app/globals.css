@@ -998,6 +998,43 @@ section { position: relative; }
 .faq-email-link { color: var(--primary-hi); text-decoration: none; transition: color 200ms ease; }
 .faq-email-link:hover { color: var(--text); }
 
+/* Onboarding — password field with toggle */
+.ob-pass-wrap { position: relative; }
+.ob-pass-input { padding-right: 44px !important; }
+.ob-pass-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 160ms ease;
+}
+.ob-pass-toggle:hover { color: var(--text-dim); }
+
+/* Onboarding — account info note */
+.ob-account-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: rgba(139,92,246,0.07);
+  border: 1px solid rgba(139,92,246,0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ob-account-note svg { flex-shrink: 0; margin-top: 1px; color: var(--primary-hi); }
+.ob-account-note p { margin: 0; }
+.ob-account-link { color: var(--primary-hi); text-decoration: none; }
+.ob-account-link:hover { color: var(--text); }
+
 /* Footer legal line */
 .footer-legal { margin: 16px 0 0; text-align: center; font-size: 10.5px; color: #444444; line-height: 1.5; }
 
