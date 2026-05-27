@@ -101,6 +101,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
           console.log('Groq response:', reply)
 
+          console.log('Token prefix:', process.env.META_WHATSAPP_TOKEN?.substring(0, 20))
           await sendWhatsAppMessage(
             userPhone,
             reply,
