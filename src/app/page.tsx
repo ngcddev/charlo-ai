@@ -19,7 +19,8 @@ const SCHEMA_APP = {
   "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "127" },
   "publisher": {
     "@type": "Organization", "name": "Charló AI", "url": "https://www.charloai.com/",
-    "address": { "@type": "PostalAddress", "addressLocality": "Popayán", "addressCountry": "CO" },
+    "telephone": "+573044843308",
+    "address": { "@type": "PostalAddress", "addressLocality": "Popayán", "addressRegion": "Cauca", "addressCountry": "CO" },
     "sameAs": ["https://www.instagram.com/charloai", "https://www.linkedin.com/company/charloai"],
   },
 }
@@ -161,7 +162,7 @@ function Nav({ onCtaClick }: { onCtaClick: () => void }) {
           <a className="nav-link" href="#demo">Demo</a>
           <a className="nav-link" href="#faq">Preguntas</a>
           <a className="nav-link" href="mailto:hola@charloai.com">Contacto</a>
-          <button className="btn btn-primary" onClick={onCtaClick} style={{ marginLeft: 8 }}>
+          <button className="btn btn-primary ml-2" onClick={onCtaClick}>
             Empieza gratis
           </button>
         </div>
@@ -233,14 +234,14 @@ function HeroChat() {
 
   return (
     <div className="phone-wrap">
-      <div className="float-chip fc-1"><ICal style={{ width: 16, height: 16 }} /> Reserva agendada</div>
-      <div className="float-chip fc-2"><IBolt style={{ width: 16, height: 16 }} /> Respuesta en 1.2s</div>
-      <div className="float-chip fc-3"><IBrain style={{ width: 16, height: 16 }} /> IA + tu identidad</div>
+      <div className="float-chip fc-1"><ICal className="w-4 h-4" /> Reserva agendada</div>
+      <div className="float-chip fc-2"><IBolt className="w-4 h-4" /> Respuesta en 1.2s</div>
+      <div className="float-chip fc-3"><IBrain className="w-4 h-4" /> IA + tu identidad</div>
 
       <div className="phone">
         <div className="phone-screen">
           <header className="chat-header">
-            <div className="avatar"><IUtensils style={{ width: 18, height: 18 }} /></div>
+            <div className="avatar"><IUtensils className="w-[18px] h-[18px]" /></div>
             <div>
               <div className="chat-name">La Fogata</div>
               <div className="chat-status"><span className="dot" /> en línea</div>
@@ -260,12 +261,12 @@ function HeroChat() {
               <div key={i} className={`msg ${m.who}`}>
                 {m.isCard ? (
                   <div>
-                    <div style={{ fontWeight: 600, marginBottom: 6 }}>¡Reserva confirmada, Carlos!</div>
+                    <div className="msg-card-title">¡Reserva confirmada, Carlos!</div>
                     <div className="msg-card">
-                      <div className="row"><ICal style={{ width: 13, height: 13 }} /> Hoy, 8:00 PM</div>
-                      <div className="row"><IUser style={{ width: 13, height: 13 }} /> 2 personas</div>
+                      <div className="row"><ICal className="w-[13px] h-[13px]" /> Hoy, 8:00 PM</div>
+                      <div className="row"><IUser className="w-[13px] h-[13px]" /> 2 personas</div>
                     </div>
-                    <div style={{ marginTop: 6 }}>¡Te esperamos!<span className="msg-time">{m.time}</span></div>
+                    <div className="msg-card-footer">¡Te esperamos!<span className="msg-time">{m.time}</span></div>
                   </div>
                 ) : (
                   <>{m.text}<span className="msg-time">{m.time}</span></>
@@ -277,7 +278,7 @@ function HeroChat() {
 
           <div className="chat-input">
             <div className="field">Escribe un mensaje…</div>
-            <button className="send" aria-label="Enviar"><ISend style={{ width: 16, height: 16, marginLeft: -2 }} /></button>
+            <button className="send" aria-label="Enviar"><ISend className="icon-send-offset" /></button>
           </div>
         </div>
       </div>
@@ -306,16 +307,16 @@ function Hero({ onCtaClick }: { onCtaClick: () => void }) {
             </p>
             <div className="hero-cta">
               <button className="btn btn-primary btn-lg" onClick={onCtaClick}>
-                Empieza gratis <IArrow style={{ width: 16, height: 16 }} />
+                Empieza gratis <IArrow className="w-4 h-4" />
               </button>
               <a className="btn btn-ghost btn-lg" href="#demo">
                 Probar el bot en vivo
               </a>
             </div>
             <div className="hero-meta">
-              <span className="item"><span className="check"><ICheck style={{ width: 10, height: 10 }} /></span> 15 días gratis</span>
-              <span className="item"><span className="check"><ICheck style={{ width: 10, height: 10 }} /></span> Sin tarjeta de crédito</span>
-              <span className="item"><span className="check"><ICheck style={{ width: 10, height: 10 }} /></span> Listo en 5 minutos</span>
+              <span className="item"><span className="check"><ICheck className="w-[10px] h-[10px]" /></span> 15 días gratis</span>
+              <span className="item"><span className="check"><ICheck className="w-[10px] h-[10px]" /></span> Sin tarjeta de crédito</span>
+              <span className="item"><span className="check"><ICheck className="w-[10px] h-[10px]" /></span> Listo en 5 minutos</span>
             </div>
           </div>
           <div className="hero-right">
@@ -329,21 +330,20 @@ function Hero({ onCtaClick }: { onCtaClick: () => void }) {
 
 // ── TrustStrip ────────────────────────────────────────────
 function TrustStrip() {
-  const c: React.CSSProperties = { color: 'rgba(255,255,255,0.85)' }
   return (
     <div className="trust-strip">
       <div className="container trust-strip-inner">
         <div className="trust-label">CONSTRUIDO SOBRE</div>
         <div className="trust-logos">
-          <span className="logo"><IWa style={c} /> WhatsApp Business API</span>
-          <span className="logo"><ILayers style={c} /> Groq AI</span>
+          <span className="logo"><IWa className="trust-icon" /> WhatsApp Business API</span>
+          <span className="logo"><ILayers className="trust-icon" /> Groq AI</span>
           <span className="logo">
-            <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 22, height: 22, ...c }}>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="trust-icon-lg" aria-hidden="true">
               <path d="M11.9 1.6L1.4 13.3a1.4 1.4 0 001 2.3h7.4l-1.7 6.9a.5.5 0 00.9.4l10.5-11.7a1.4 1.4 0 00-1-2.3h-7.4l1.7-6.9a.5.5 0 00-.9-.4z" />
             </svg>
             Supabase
           </span>
-          <span className="logo"><ILock style={c} /> SSL Seguro</span>
+          <span className="logo"><ILock className="trust-icon" /> SSL Seguro</span>
         </div>
       </div>
     </div>
@@ -358,17 +358,13 @@ function CustomerLogos() {
     'Estética Lúa · Cartagena', 'Pizzería Nona · Pereira',
   ]
   return (
-    <div style={{ borderBottom: '1px solid var(--border)', padding: '44px 0', overflow: 'hidden' }}>
+    <div className="customer-logos-wrap">
       <div className="container">
-        <p className="trust-label center" style={{ textAlign: 'center', marginBottom: 24 }}>
+        <p className="trust-label center mb-6">
           +200 NEGOCIOS LOCALES AUTOMATIZANDO CON CHARLÓ
         </p>
       </div>
-      <div style={{
-        position: 'relative',
-        maskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
-        WebkitMaskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
-      }}>
+      <div className="customer-logos-mask">
         <div className="logo-marquee">
           {[...ITEMS, ...ITEMS].map((label, i) => (
             <span key={i} className="marquee-item">{label}</span>
@@ -533,7 +529,7 @@ function Industries() {
     { icon: <IHome />,     title: 'Inmobiliarias',      desc: 'Filtros y visitas automatizadas.',              tag: '+25 agencias' },
   ]
   return (
-    <section className="section" style={{ background: 'linear-gradient(180deg, var(--bg), var(--bg-1), var(--bg))' }}>
+    <section className="section industries-section">
       <div className="container">
         <div ref={headRef} className="reveal section-head">
           <span className="eyebrow"><span className="dot" /> Por industria</span>
@@ -576,7 +572,7 @@ function Comparison() {
             </div>
             <ul className="compare-list bad">
               {bad.map((t, i) => (
-                <li key={i}><span className="icon"><IXMark style={{ width: 12, height: 12 }} /></span>{t}</li>
+                <li key={i}><span className="icon"><IXMark className="w-3 h-3" /></span>{t}</li>
               ))}
             </ul>
           </div>
@@ -587,7 +583,7 @@ function Comparison() {
             </div>
             <ul className="compare-list good">
               {good.map((t, i) => (
-                <li key={i}><span className="icon"><ICheck style={{ width: 12, height: 12 }} /></span>{t}</li>
+                <li key={i}><span className="icon"><ICheck className="w-3 h-3" /></span>{t}</li>
               ))}
             </ul>
           </div>
@@ -644,14 +640,14 @@ function DemoChat() {
   return (
     <section className="section" id="demo">
       <div className="container">
-        <div ref={ref} className="reveal section-head" style={{ marginBottom: 40 }}>
+        <div ref={ref} className="reveal section-head demo-section-head">
           <span className="eyebrow"><span className="dot" /> Demo en vivo</span>
           <h2 className="section-title gradient-text">Pruébalo ahora.<br />Habla con Charló.</h2>
           <p className="section-sub">Esta es una demo real de cómo respondería Charló en tu restaurante. Pregúntale lo que quieras.</p>
         </div>
         <div className="demo-wrap">
           <div className="demo-copy">
-            <span className="eyebrow"><IBrain style={{ width: 13, height: 13 }} /> IA conversacional</span>
+            <span className="eyebrow"><IBrain className="w-[13px] h-[13px]" /> IA conversacional</span>
             <h3>Responde como un humano,<br />aprende como una máquina.</h3>
             <p>Charló entiende contexto, recuerda la conversación y se adapta al tono de tu negocio. Pruébalo con una pregunta real — o usa una de las sugeridas.</p>
             <div className="demo-presets">
@@ -662,7 +658,7 @@ function DemoChat() {
           </div>
           <div className="demo-chat">
             <div className="demo-chat-head">
-              <div className="avatar"><IUtensils style={{ width: 18, height: 18 }} /></div>
+              <div className="avatar"><IUtensils className="w-[18px] h-[18px]" /></div>
               <div>
                 <div className="chat-name">La Fogata · Demo</div>
                 <div className="chat-status"><span className="dot" /> {loading ? 'escribiendo…' : 'en línea'}</div>
@@ -683,7 +679,7 @@ function DemoChat() {
                 aria-label="Mensaje para Charló"
               />
               <button type="submit" disabled={loading || !input.trim()} aria-label="Enviar">
-                <ISend style={{ width: 16, height: 16 }} />
+                <ISend className="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -735,59 +731,58 @@ function Testimonials() {
 // ── Integrations ──────────────────────────────────────────
 function Integrations() {
   const ref = useReveal()
-  const mono: React.CSSProperties = { width: 32, height: 32, color: 'rgba(255,255,255,0.9)' }
   type Tile = { name: string; featured?: boolean; glyph: React.ReactNode }
   const tiles: Tile[] = [
-    { name: 'WhatsApp', featured: true, glyph: <IWa style={mono} /> },
+    { name: 'WhatsApp', featured: true, glyph: <IWa className="int-icon" /> },
     { name: 'Google Calendar', glyph: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={mono}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="int-icon">
         <rect x="3" y="4.5" width="18" height="17" rx="2.2" />
         <line x1="3" y1="9.5" x2="21" y2="9.5" /><line x1="8" y1="2.5" x2="8" y2="6.5" /><line x1="16" y1="2.5" x2="16" y2="6.5" />
         <text x="12" y="17.5" textAnchor="middle" fontSize="6" fontFamily="monospace" fontWeight="700" fill="currentColor" stroke="none">31</text>
       </svg>
     )},
-    { name: 'Instagram', glyph: <IInsta style={mono} /> },
+    { name: 'Instagram', glyph: <IInsta className="int-icon" /> },
     { name: 'Stripe', glyph: (
-      <svg viewBox="0 0 60 24" fill="currentColor" style={{ height: 22, width: 'auto', color: 'rgba(255,255,255,0.9)' }}>
+      <svg viewBox="0 0 60 24" fill="currentColor" className="int-icon-stripe">
         <path d="M59.64 14.28c0-4.13-2-7.39-5.82-7.39s-6.12 3.26-6.12 7.35c0 4.85 2.74 7.32 6.66 7.32a8.97 8.97 0 0 0 4.45-1.05v-3.24a8.5 8.5 0 0 1-3.94.9c-1.56 0-2.94-.55-3.12-2.43h7.86c0-.21.03-1.04.03-1.46zm-7.94-1.54c0-1.81 1.11-2.56 2.12-2.56.98 0 2.02.75 2.02 2.56zm-10.21-5.85c-1.62 0-2.66.76-3.24 1.29l-.21-1.02h-3.64v18.84l4.13-.88.01-4.57c.6.43 1.48 1.05 2.94 1.05 2.97 0 5.68-2.4 5.68-7.45 0-4.62-2.74-7.26-5.67-7.26zm-.99 11.16a2.2 2.2 0 0 1-1.74-.7l-.03-5.45c.39-.36.94-.71 1.77-.71 1.35 0 2.29 1.52 2.29 3.42 0 1.94-.92 3.44-2.29 3.44zm-9.91-12.6 4.14-.9V1.2l-4.14.89zm0 1.32h4.14v14.05h-4.14zm-4.44 1.23-.27-1.22h-3.56v14.05h4.13v-9.52c.97-1.27 2.62-1.04 3.13-.86V7.21c-.53-.2-2.46-.55-3.43 1.59zm-8.27-4.71-4.03.86-.02 13.25c0 2.45 1.84 4.25 4.29 4.25 1.35 0 2.34-.25 2.89-.55v-3.37c-.52.21-3.13.98-3.13-1.45V10.83h3.13V7.31h-3.13zm-9.36 7.86c0-.65.53-.9 1.4-.9 1.24 0 2.83.38 4.08 1.06v-3.94a10.8 10.8 0 0 0-4.07-.75c-3.34 0-5.57 1.75-5.57 4.66 0 4.55 6.25 3.82 6.25 5.78 0 .77-.66 1.02-1.59 1.02-1.36 0-3.1-.56-4.48-1.32v3.99a11.4 11.4 0 0 0 4.48.94c3.43 0 5.78-1.7 5.78-4.65 0-4.9-6.28-4.02-6.28-5.89z" />
       </svg>
     )},
-    { name: 'Wompi', glyph: <span style={{ fontWeight: 700, fontSize: 19, color: 'rgba(255,255,255,0.9)', letterSpacing: '-0.04em' }}>wompi</span> },
+    { name: 'Wompi', glyph: <span className="int-icon-wompi">wompi</span> },
     { name: 'Google Sheets', glyph: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={mono}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="int-icon">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
         <polyline points="14 2 14 8 20 8" />
         <line x1="8" y1="13" x2="16" y2="13" /><line x1="8" y1="17" x2="16" y2="17" /><line x1="12" y1="11" x2="12" y2="19" />
       </svg>
     )},
     { name: 'Webhooks', glyph: (
-      <svg viewBox="0 0 24 24" fill="currentColor" style={mono}>
+      <svg viewBox="0 0 24 24" fill="currentColor" className="int-icon">
         <path d="M10.46 13.36a1 1 0 0 1 .26 1.39l-2.8 4.18a2.99 2.99 0 1 1-2.49-1.66l1.92-2.87a1 1 0 0 1 1.66 1.11l-1.46 2.18A1 1 0 1 0 8.5 18l3.04-4.54a1 1 0 0 1 .92-.1zM8.08 7.4a3 3 0 0 1 5.84.9 3 3 0 0 1-.13.88l2.34 4.04A3 3 0 1 1 14.4 14.3l-3.04-5.25a1 1 0 0 1 .15-1.21A1 1 0 1 0 9.95 6.3a1 1 0 0 1-1.87 1.1zm10.49 9.5a3 3 0 1 1-2.69-4.34h4.2a1 1 0 0 1 0 2H15.9a1 1 0 0 0 0 1.07c.2.36.6.6 1.04.6a1 1 0 0 1 1 1c0 .12-.02.24-.07.35a1 1 0 0 1 .7-.68z" />
       </svg>
     )},
     { name: 'Zapier', glyph: (
-      <svg viewBox="0 0 24 24" fill="currentColor" style={mono}>
+      <svg viewBox="0 0 24 24" fill="currentColor" className="int-icon">
         <path d="M14.04 12a8.04 8.04 0 0 1-.52 2.83 8.04 8.04 0 0 1-2.83.52 8.04 8.04 0 0 1-2.84-.52 8.04 8.04 0 0 1-.51-2.83c0-1 .18-1.95.51-2.83a8.04 8.04 0 0 1 2.83-.52c1 0 1.96.18 2.84.52.33.88.51 1.83.51 2.83zM23.32 10.4h-7.83l5.54-5.53a11.96 11.96 0 0 0-2.26-2.27l-5.54 5.54V.32a11.96 11.96 0 0 0-1.59-.11h-.01c-.55 0-1.08.03-1.6.11v7.83L4.48 2.6a11.96 11.96 0 0 0-2.27 2.27l5.54 5.53H.32S.21 11.45.21 12c0 .55.04 1.08.11 1.6h7.83L2.6 19.13a11.96 11.96 0 0 0 2.27 2.26l5.53-5.53v7.82c.51.08 1.04.11 1.59.12h.02c.55 0 1.08-.04 1.6-.12v-7.82l5.53 5.53a11.96 11.96 0 0 0 2.27-2.26l-5.54-5.54h7.83c.07-.51.11-1.04.11-1.59v-.02c0-.55-.04-1.08-.11-1.6z" />
       </svg>
     )},
-    { name: 'Tu sistema', glyph: <IPlus style={{ ...mono, color: 'rgba(255,255,255,0.5)' }} /> },
+    { name: 'Tu sistema', glyph: <IPlus className="int-icon int-icon-dim" /> },
   ]
   return (
-    <section className="section" style={{ background: 'linear-gradient(180deg, var(--bg), var(--bg-1))' }}>
+    <section className="section integrations-section">
       <div className="container">
         <div className="integrations-wrap">
           <div ref={ref} className="reveal">
             <span className="eyebrow"><span className="dot" /> Integraciones</span>
-            <h2 className="section-title gradient-text" style={{ textAlign: 'left' }}>Se conecta<br />con lo que ya usas.</h2>
-            <p className="section-sub" style={{ textAlign: 'left', margin: '0 0 28px' }}>WhatsApp, Instagram, tu calendario, tu pasarela de pagos. Charló habla con todo.</p>
+            <h2 className="section-title gradient-text text-left">Se conecta<br />con lo que ya usas.</h2>
+            <p className="section-sub integrations-sub">WhatsApp, Instagram, tu calendario, tu pasarela de pagos. Charló habla con todo.</p>
             <a className="btn btn-ghost" href="#features">
-              Ver todas las integraciones <IArrow style={{ width: 14, height: 14 }} />
+              Ver todas las integraciones <IArrow className="w-3.5 h-3.5" />
             </a>
           </div>
           <div className="integration-grid">
             {tiles.map((t, i) => (
               <div key={i} className={`int-tile${t.featured ? ' featured' : ''}`}>
-                <span className="glyph" style={{ display: 'grid', placeItems: 'center' }}>{t.glyph}</span>
+                <span className="glyph">{t.glyph}</span>
                 <span>{t.name}</span>
               </div>
             ))}
@@ -814,7 +809,7 @@ function Pricing({ onSelect }: { onSelect: () => void }) {
           <span className="eyebrow"><span className="dot" /> Precios</span>
           <h2 className="section-title gradient-text">Planes simples, sin sorpresas.</h2>
           <p className="section-sub">Elige el plan que mejor se adapta a tu negocio. Cancela cuando quieras.</p>
-          <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}>
+          <div className="mt-7 flex justify-center">
             <div className="pricing-toggle" role="tablist">
               <button role="tab" aria-selected={!annual} className={!annual ? 'active' : ''} onClick={() => setAnnual(false)}>Mensual</button>
               <button role="tab" aria-selected={annual} className={annual ? 'active' : ''} onClick={() => setAnnual(true)}>
@@ -837,13 +832,12 @@ function Pricing({ onSelect }: { onSelect: () => void }) {
                 <div className="plan-desc">{p.desc}</div>
                 <ul className="plan-list">
                   {p.features.map((f, j) => (
-                    <li key={j}><span className="tick"><ICheck style={{ width: 14, height: 14 }} /></span>{f}</li>
+                    <li key={j}><span className="tick"><ICheck className="w-3.5 h-3.5" /></span>{f}</li>
                   ))}
                 </ul>
                 <button
-                  className={p.featured ? 'btn btn-primary' : 'btn btn-ghost'}
+                  className={`${p.featured ? 'btn btn-primary' : 'btn btn-ghost'} justify-center`}
                   onClick={onSelect}
-                  style={{ justifyContent: 'center' }}
                 >
                   Empezar ahora
                 </button>
@@ -875,14 +869,14 @@ function FAQ() {
         <div ref={ref} className="reveal section-head">
           <span className="eyebrow"><span className="dot" /> Preguntas frecuentes</span>
           <h2 className="section-title gradient-text">Lo que todos preguntan.</h2>
-          <p className="section-sub">¿Algo más? Escríbenos a hola@charloai.com — respondemos en segundos (cómo no).</p>
+          <p className="section-sub">¿Algo más? <a href="mailto:hola@charloai.com" className="faq-email-link">Escríbenos</a> — respondemos en segundos (cómo no).</p>
         </div>
         <div className="faq">
           {items.map((it, i) => (
             <div key={i} className={`faq-item${open === i ? ' open' : ''}`}>
               <button className="faq-q" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}>
                 <span>{it.q}</span>
-                <span className="icon"><IPlus style={{ width: 14, height: 14 }} /></span>
+                <span className="icon"><IPlus className="w-3.5 h-3.5" /></span>
               </button>
               <div className="faq-a" role="region">
                 <div className="faq-a-inner">
@@ -935,7 +929,7 @@ function FinalCTA() {
         </h2>
         <p>15 días gratis. Sin tarjeta de crédito. Cancela cuando quieras.</p>
         {status === 'success' ? (
-          <p style={{ fontSize: 17, color: '#4ade80', marginTop: 16 }}>✓ ¡Listo! Revisa tu correo para continuar.</p>
+          <p className="cta-success">✓ ¡Listo! Revisa tu correo para continuar.</p>
         ) : (
           <form className="cta-form" onSubmit={(e) => void handleSubmit(e)}>
             <input
@@ -948,14 +942,14 @@ function FinalCTA() {
             />
             <button className="btn btn-primary" type="submit" disabled={status === 'loading'}>
               {status === 'loading' ? 'Enviando…' : 'Comenzar ahora'}
-              {status !== 'loading' && <IArrow style={{ width: 14, height: 14 }} />}
+              {status !== 'loading' && <IArrow className="w-3.5 h-3.5" />}
             </button>
           </form>
         )}
         {status === 'error' && (
-          <p style={{ fontSize: 13, color: '#f87171', marginTop: 10 }}>Algo salió mal. Intenta de nuevo.</p>
+          <p className="cta-error">Algo salió mal. Intenta de nuevo.</p>
         )}
-        <div style={{ marginTop: 24, color: 'var(--text-muted)', fontSize: 13.5 }}>
+        <div className="cta-tagline">
           ✦ Más de 200 negocios en Colombia ya automatizan con Charló
         </div>
       </div>
@@ -1011,7 +1005,7 @@ function Footer() {
             <a href="https://www.linkedin.com/company/charloai" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><ILinkedin /></a>
           </div>
         </div>
-        <p style={{ margin: '16px 0 0', textAlign: 'center', fontSize: 10.5, color: '#444444', lineHeight: 1.5 }}>
+        <p className="footer-legal">
           Charló AI es un producto de GAVIRIA CERON NICOLAS · NIT 1059236708 · Popayán, Colombia
         </p>
       </div>

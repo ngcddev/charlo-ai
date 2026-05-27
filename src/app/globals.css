@@ -527,3 +527,55 @@ section { position: relative; }
 
 /* ── utils ───────────────────────────────────────────────── */
 .center { text-align: center; }
+
+/* ── inline-style replacements ──────────────────────────── */
+
+/* TrustStrip icons */
+.trust-icon { color: rgba(255,255,255,0.85); }
+.trust-icon-lg { width: 22px; height: 22px; color: rgba(255,255,255,0.85); }
+
+/* CustomerLogos section */
+.customer-logos-wrap { border-bottom: 1px solid var(--border); padding: 44px 0; overflow: hidden; }
+.customer-logos-mask {
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+/* HeroChat card message */
+.msg-card-title { font-weight: 600; margin-bottom: 6px; }
+.msg-card-footer { margin-top: 6px; }
+
+/* ISend icon with offset */
+.icon-send-offset { width: 16px; height: 16px; margin-left: -2px; }
+
+/* Section background variants */
+.industries-section { background: linear-gradient(180deg, var(--bg), var(--bg-1), var(--bg)); }
+.integrations-section { background: linear-gradient(180deg, var(--bg), var(--bg-1)); }
+
+/* Demo section head margin */
+.demo-section-head { margin-bottom: 40px; }
+
+/* Integrations text alignment */
+.integrations-sub { text-align: left; margin: 0 0 28px; }
+
+/* Integration tile glyph */
+.glyph { display: grid; place-items: center; }
+
+/* Integration icons */
+.int-icon { width: 32px; height: 32px; color: rgba(255,255,255,0.9); }
+.int-icon-dim { color: rgba(255,255,255,0.5); }
+.int-icon-stripe { height: 22px; width: auto; color: rgba(255,255,255,0.9); }
+.int-icon-wompi { font-weight: 700; font-size: 19px; color: rgba(255,255,255,0.9); letter-spacing: -0.04em; }
+
+/* CTA state messages */
+.cta-success { font-size: 17px; color: #4ade80; margin-top: 16px; }
+.cta-error   { font-size: 13px; color: #f87171; margin-top: 10px; }
+.cta-tagline { margin-top: 24px; color: var(--text-muted); font-size: 13.5px; }
+
+/* FAQ contact link */
+.faq-email-link { color: var(--primary-hi); text-decoration: none; transition: color 200ms ease; }
+.faq-email-link:hover { color: var(--text); }
+
+/* Footer legal line */
+.footer-legal { margin: 16px 0 0; text-align: center; font-size: 10.5px; color: #444444; line-height: 1.5; }

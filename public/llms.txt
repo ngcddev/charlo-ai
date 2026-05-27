@@ -1,0 +1,65 @@
+# Charló AI
+
+## ¿Qué es Charló AI?
+
+Charló AI es un asistente virtual de WhatsApp impulsado por inteligencia artificial, diseñado para automatizar la atención al cliente de negocios locales en Colombia y América Latina. Permite a restaurantes, clínicas, salones de belleza e inmobiliarias responder mensajes de WhatsApp de forma instantánea, 24 horas al día, 7 días a la semana, sin necesidad de código ni conocimientos técnicos.
+
+## Empresa
+
+- **Nombre legal:** GAVIRIA CERON NICOLAS
+- **NIT:** 1059236708
+- **Ciudad:** Popayán, Cauca, Colombia
+- **Teléfono:** +57 304 484 3308
+- **Correo:** hola@charloai.com
+- **Sitio web:** https://www.charloai.com
+
+## Servicios
+
+Charló AI ofrece un asistente virtual de WhatsApp personalizable que:
+
+- Responde mensajes de clientes de forma instantánea (respuesta en menos de 2 segundos)
+- Agenda reservas, citas y turnos directamente en el calendario del negocio
+- Gestiona preguntas frecuentes, menús, horarios y precios
+- Escala automáticamente a un agente humano cuando detecta preguntas complejas
+- Se integra con Google Calendar, Instagram, Stripe, Wompi, Google Sheets, Webhooks y Zapier
+- Cumple con la Ley 1581 de Habeas Data de Colombia
+
+## Industrias objetivo
+
+- **Restaurantes:** reservas de mesa, consulta de menú y horarios
+- **Clínicas y consultorios:** agendamiento de citas, recordatorios, consultas médicas básicas
+- **Salones de belleza:** turnos y citas de servicios de estética
+- **Inmobiliarias:** filtrado de propiedades y coordinación de visitas
+
+## Canales disponibles
+
+- WhatsApp Business API (canal principal)
+- Instagram Direct (próximamente)
+- Widget web embebible
+
+## Precios (en USD, facturación mensual)
+
+| Plan     | Precio | Conversaciones/mes | Canales |
+|----------|--------|--------------------|---------|
+| Básico   | $19    | 300                | 1       |
+| Esencial | $39    | 1,000              | 1       |
+| Pro      | $69    | Ilimitadas         | 2       |
+
+Todos los planes incluyen 15 días de prueba gratis, sin tarjeta de crédito. Descuento del 20% en facturación anual.
+
+## Tecnología
+
+- Inteligencia artificial: Groq AI (llama-3.3-70b-versatile)
+- Mensajería: Meta WhatsApp Business Cloud API
+- Infraestructura: Supabase (hosting en Colombia), Next.js
+- Seguridad: encriptación end-to-end, SSL, cumplimiento Ley 1581
+
+## Redes sociales
+
+- Instagram: https://www.instagram.com/charloai
+- LinkedIn: https://www.linkedin.com/company/charloai
+
+## Enfoque geográfico
+
+Principal: Colombia (Popayán, Cali, Medellín, Bogotá, Pasto, Manizales, Cartagena, Pereira)
+Secundario: América Latina (cualquier país hispanohablante)

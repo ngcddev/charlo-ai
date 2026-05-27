@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const geistSans = Geist({
@@ -27,14 +28,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Charló AI' }],
   creator: 'Charló AI',
-  metadataBase: new URL('https://charlo.ai'),
+  metadataBase: new URL('https://www.charloai.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'es_CO',
-    url: 'https://charlo.ai',
+    url: 'https://www.charloai.com',
     siteName: 'Charló AI',
     title: 'Charló AI | Asistente de WhatsApp con IA para Negocios en Colombia',
     description:
@@ -83,6 +84,19 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3WCGE2MVTM"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3WCGE2MVTM');
+          `}
+        </Script>
       </body>
     </html>
   )
