@@ -1,0 +1,17 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [{
+    "changes": [{
+      "value": {
+        "messages": [{
+          "from": "573001234567",
+          "type": "text",
+          "text": { "body": "Hola, a que hora cierran?" },
+          "id": "msg_test_1"
+        }],
+        "metadata": { "phone_number_id": "test_phone_id" }
+      },
+      "field": "messages"
+    }]
+  }]
+}

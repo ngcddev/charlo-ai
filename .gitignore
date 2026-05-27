@@ -22,7 +22,6 @@
 
 # misc
 .DS_Store
-*.pem
 
 # debug
 npm-debug.log*
@@ -30,12 +29,70 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# ── Secrets & credentials (current and future) ──────────────────────────────
+# env files — all variants
+.env
+.env.*
+.env.local
+.env.*.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env.staging
+.env.staging.local
 
-# vercel
+# certificates and private keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.csr
+*.jks
+*.keystore
+
+# generic secrets / credential files
+secrets/
+.secrets/
+credentials/
+.credentials/
+*.secret
+*.secrets
+secrets.json
+secrets.yaml
+secrets.yml
+config/secrets.*
+
+# service-account files (GCP, Firebase, AWS, etc.)
+*service-account*.json
+*serviceaccount*.json
+firebase-adminsdk*.json
+google-credentials*.json
+aws-credentials
+.aws/
+
+# Supabase local config (contains db passwords)
+supabase/.temp/
+supabase/seed.sql
+
+# API token files
+.token
+.tokens
+*.token
+auth.json
+
+# ── Docs & AI agent files ────────────────────────────────────────────────────
+*.md
+*.mdx
+
+# ── Vercel ───────────────────────────────────────────────────────────────────
 .vercel
 
-# typescript
+# ── TypeScript ───────────────────────────────────────────────────────────────
 *.tsbuildinfo
 next-env.d.ts
